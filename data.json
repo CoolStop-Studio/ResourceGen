@@ -1,0 +1,29 @@
+{
+    "modules": [
+        {
+            "name": "pickaxe",
+            "cost": [
+                {"type": "iron", "amount": 5 },
+                {"type": "wood", "amount": 2 }
+            ],
+            "in": [
+                {"type": "strength", "amount": 1}
+            ],
+            "out": [
+                {"type": "stone", "amount": 3}
+            ]
+        }
+    ],
+    "materials": [
+        "iron",
+        "wood",
+        "strength",
+        "stone"
+    ],
+    "emoji": {
+        "iron": "🦾",
+        "wood": "🪵",
+        "strength": "💪",
+        "stone": "🪨"
+    }
+}
