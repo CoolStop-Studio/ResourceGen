@@ -1,17 +1,18 @@
 let json;
 let inventory = {}
-let conversionsIn = {}
-let conversionsOut = {}
+let conversions = [
+  0, 0, 0, 0, 0, 0
+]
 
 fetch('./data.json')
   .then(response => response.json())
   .then(data => {
     json = data;
     loadModules();
-    loadValues();
+    loadInventory();
   });
 
-function loadValues() {
+function loadInventory() {
   const defaultValue = 100;
   const materialList = json.materials;
 
@@ -20,8 +21,6 @@ function loadValues() {
   );
 
   inventory = { ...materialObject };
-  conversionsIn = { ...materialObject };
-  conversionsOut = { ...materialObject };
 }
 
 
@@ -36,13 +35,10 @@ function loadModules() {
     const outputArea = document.createElement("div");
     const costArea = document.createElement("div");
 
-    buyButton.innerHTML = 'buy';
+    buyButton.innerHTML = 'buy x0';
     buyButton.addEventListener('click', () => {
-      alert("BUYING");
-
       for (const costItem of e.cost) {
         if (inventory[costItem.type] < costItem.amount) {
-          alert("NOT ENOUGH");
           return;
         }
       }
@@ -51,15 +47,8 @@ function loadModules() {
         inventory[costItem.type] -= costItem.amount;
       });
 
-      e.in.forEach(inItem => {
-        conversionsIn[inItem.type] += inItem.amount;
-      });
-
-      e.out.forEach(outItem => {
-        conversionsOut[outItem.type] += outItem.amount;
-      });
-
-      alert("SUCCESS BUY");
+      conversions[json.modules.findIndex(m => m.name === e.name)]++
+      buyButton.innerHTML = 'buy x' + conversions[json.modules.findIndex(m => m.name === e.name)]
     });
 
 
@@ -99,9 +88,29 @@ function updateDisplays() {
 }
 
 function updateValues() {
-  for (const key in inventory) {
-    if (inventory.hasOwnProperty(key)) {
-      inventory[key] -= (conversionsIn[key] || 0) - (conversionsOut[key] || 0);
+  for (let module = 0; module < conversions.length; module++) {
+    for (let useModule = 0; useModule < conversions[module]; useModule++) {
+
+      // Check if we can afford all inputs
+      let canAfford = true;
+      for (const inputNum of json.modules[module].in) {
+        if (inventory[inputNum.type] < inputNum.amount) {
+          canAfford = false;
+          break;
+        }
+      }
+
+      if (!canAfford) continue; // Skip this iteration if we can't afford
+
+      // Deduct inputs
+      json.modules[module].in.forEach(input => {
+        inventory[input.type] -= input.amount;
+      });
+
+      // Add outputs
+      json.modules[module].out.forEach(output => {
+        inventory[output.type] += output.amount;
+      });
     }
   }
 }

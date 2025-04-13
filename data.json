@@ -12,18 +12,80 @@
             "out": [
                 {"type": "stone", "amount": 3}
             ]
+        },
+        {
+            "name": "shovel",
+            "cost": [
+                {"type": "iron", "amount": 3 },
+                {"type": "wood", "amount": 6 }
+            ],
+            "in": [
+                {"type": "strength", "amount": 1}
+            ],
+            "out": [
+                {"type": "dirt", "amount": 3}
+            ]
+        },
+        {
+            "name": "feild",
+            "cost": [
+                {"type": "dirt", "amount": 40 },
+                {"type": "stone", "amount": 15 }
+            ],
+            "in": [
+                {"type": "dirt", "amount": 3}
+            ],
+            "out": [
+                {"type": "crop", "amount": 5}
+            ]
+        },
+        {
+            "name": "basic worker",
+            "cost": [
+                {"type": "water", "amount": 10 },
+                {"type": "food", "amount": 15 }
+            ],
+            "in": [
+                {"type": "dollar", "amount": 3}
+            ],
+            "out": [
+                {"type": "strength", "amount": 5}
+            ]
+        },
+        {
+            "name": "market",
+            "cost": [
+                {"type": "wood", "amount": 20 },
+                {"type": "stone", "amount": 15 }
+            ],
+            "in": [
+                {"type": "stone", "amount": 2}
+            ],
+            "out": [
+                {"type": "dollar", "amount": 7}
+            ]
         }
     ],
     "materials": [
         "iron",
         "wood",
         "strength",
-        "stone"
+        "stone",
+        "dirt",
+        "crop",
+        "food",
+        "dollar",
+        "water"
     ],
     "emoji": {
         "iron": "🦾",
         "wood": "🪵",
         "strength": "💪",
-        "stone": "🪨"
+        "stone": "🪨",
+        "dirt": "💩",
+        "crop": "🌱",
+        "food": "🍔",
+        "dollar": "💵",
+        "water": "💧"
     }
 }
